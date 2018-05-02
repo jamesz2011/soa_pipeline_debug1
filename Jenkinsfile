@@ -11,11 +11,14 @@ pipeline {
             sh ' echo "hello test!"'
           }
         }
-        stage('print') {
-          steps {
-            sh 'echo $gitname'
-          }
-        }
+        
+     stage('Git') {
+        def input_result = input message: 'input branch name for this job', ok: 'ok', parameters: [string(defaultValue: 'master', description: 'branch name', name: 'branch'), string(defaultValue: '', description: 'commit to switch', name: 'commit')]
+
+        sh "echo ${input_result.branch}"
+        sh "echo ${input_result.commit}"
+    }
+        
       }
     }
   }
